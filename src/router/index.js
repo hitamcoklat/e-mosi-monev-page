@@ -16,7 +16,7 @@ Vue.use(VueRouter)
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
-    path: '/monev/input-pbf/:username',
+    path: '/monev/input-pbf/:username/:longlat',
     props: true,
     name: 'InputMonevPBF',
     component: () => import('../views/InputMonevPBF.vue')

@@ -495,7 +495,7 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                 ref="upload"
                 :multiple="true"
                 v-model="files"
-                post-action="http://localhost:8000/upload"
+                post-action="http://202.150.151.50/api-e-mosi/public/upload"
                 @input="onChangeFile"
             >
                 <img style="width: 60px;" :src="`${this.$assets}/images/upload-icon.png`" />
@@ -520,7 +520,7 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
     import qs from "qs";
 
     export default {
-        props: ['username'],
+        props: ['username', 'longlat'],
         data() {
             return {
                 isLoading: false,
@@ -585,6 +585,7 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                     DATA: this.form,
                     DATA_FILE: this.files,
                     USERNAME: this.username,
+                    LONGLAT: this.longlat,
                     JENIS: 'pbf'
                 };
                 this.$http.post(this.$api + '/input-monev', qs.stringify(data))
@@ -638,6 +639,7 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
 
         created() {
             console.log(this.username)
+            console.log(this.longlat)
         }
     }
 </script>
