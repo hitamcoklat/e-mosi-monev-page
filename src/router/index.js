@@ -20,6 +20,12 @@ Vue.use(VueRouter)
     props: true,
     name: 'InputMonevPBF',
     component: () => import('../views/InputMonevPBF.vue')
+  },
+  {
+    path: '/monev/input-pak/:username/:longlat',
+    props: true,
+    name: 'InputMonevPAK',
+    component: () => import('../views/InputMonevPAK.vue')
   }
 ]
 
