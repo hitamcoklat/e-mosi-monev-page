@@ -26,6 +26,12 @@ Vue.use(VueRouter)
     props: true,
     name: 'InputMonevPAK',
     component: () => import('../views/InputMonevPAK.vue')
+  },
+  {
+    path: '/monev/inspeksi-pak-pkrt/:username/:longlat',
+    props: true,
+    name: 'InputMonevPAK',
+    component: () => import('../views/InputMonevInspeksiPakPkrt.vue')
   }
 ]
 
