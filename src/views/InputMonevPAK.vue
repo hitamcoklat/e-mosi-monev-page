@@ -1346,7 +1346,7 @@ Upload data dukung hasil inspeksi dalam 1(satu) file format PDF diantaranya:<br 
                 name: 'John Silver',
                 form: [],
                 listKabkot: ['Kabupaten Bogor', 'Kota Depok', 'Kota Bekasi', 'Kota Cirebon', 'Kota Banjar', 'Kota Tasikmalaya', 'Kota Cimahi', 'Kota Bandung', 'Kota Sukabumi', 'Kota Bogor', 'Kabupaten Bandung Barat', 'Kabupaten Bekasi', 'Kabupaten Karawang', 'Kabupaten Purwakarta', 'Kabupaten Subang', 'Kabupaten Indramayu', 'Kabupaten Sumedang', 'Kabupaten Majalengka', 'Kabupaten Cirebon', 'Kabupaten Kuningan', 'Kabupaten Ciamis', 'Kabupaten Tasikmalaya', 'Kabupaten Garut', 'Kabupaten Cianjur', 'Kabupaten Sukabumi'],
-                page1: false,
+                page1: true,
                 page2: false,
                 page3: false,
                 page4: false,
@@ -1354,7 +1354,7 @@ Upload data dukung hasil inspeksi dalam 1(satu) file format PDF diantaranya:<br 
                 page6: false,
                 page7: false,
                 page8: false,
-                page9: true,
+                page9: false,
                 files: []
             }
         },
