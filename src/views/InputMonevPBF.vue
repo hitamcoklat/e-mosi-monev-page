@@ -1,12 +1,29 @@
 <template>
     <div style="max-width: 450px; padding: 0px;" class="container">
         <!-- PAGE SATU -->
-        <section v-show="pageSatu" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
-
+        <section v-if="pageSatu" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+            <p style="font-weight: bold;">Upload Foto Lokasi</p>
+            <ul>
+                <li v-if="fotoLokasi.length > 0" v-for="(item, index) in fotoLokasi">
+                    <img @click="clickImageLokasi(index)" style="width: 100%;" :src="`${item.response.data.img}`" />
+                </li>
+            </ul>             
+            <file-upload
+                style="width: 100%;"
+                ref="uploadFotoLokasi"
+                :multiple="true"
+                v-model="fotoLokasi"
+                :post-action="`${this.$api}/upload`"
+                @input="onChangeFileLokasi"
+            >
+                <b-button type="is-success is-medium" expanded>Pilih File</b-button>
+                
+            </file-upload>
+            <br />
+            <br />
             <b-field label="Masukan Tanggal Periksa">
                 <b-input size="is-medium" type="date" v-model="form.tgl_periksa" placeholder="Masukan tanggal periksa"></b-input>
             </b-field>
-            <br />
             <p style="font-weight: bold;">Deskripsi Singkat Perusahaan</p>
             <b-field label="Nama PBF">
                 <b-input size="is-medium" type="text" v-model="form.nama_pbf" placeholder="Masukan Nama PBF"></b-input>
@@ -15,18 +32,18 @@
                 <b-input size="is-medium" type="text" v-model="form.alamat_pbf" placeholder="Masukan Alamat PBF"></b-input>
             </b-field>
             <b-field label="Pilih Kabupaten/Kota">
-                <b-select placeholder="Pilih Kab/Kota" required expanded>
+                <b-select v-model="form.kab_kota" placeholder="Pilih Kab/Kota" required expanded>
                     <option v-for="(item, index) in listKabkot" :key="index" :ref="index" :value="item">{{item}}</option>
                 </b-select>
             </b-field>            
             <b-field label="Status PBF">
-                <b-select placeholder="Status PBF" expanded>
+                <b-select v-model="form.status_pbf" placeholder="Status PBF" expanded>
                     <option value="Pusat">Pusat</option>
                     <option value="Cabang">Cabang</option>
                 </b-select>
             </b-field>            
             <b-field label="Jenis PBF">
-                <b-select placeholder="Status PBF" expanded>
+                <b-select v-model="form.jenis_pbf" placeholder="Jenis PBF" expanded>
                     <option value="Obat Jadi">Obat Jadi</option>
                     <option value="Bahan Baku Obat">Bahan Baku Obat</option>
                 </b-select>
@@ -34,12 +51,13 @@
 
             <div class="buttons">
                 <b-button v-on:click="clearPage(); pageDua = true" type="is-primary is-large" expanded>Next</b-button>
+                <!-- <b-button v-on:click="submitProses();" type="is-primary is-large" expanded>Submit</b-button> -->
             </div>        
   
         </section>
 
         <!-- PAGE DUA -->
-        <section v-show="pageDua" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="pageDua" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <div style="background-color: #EEECD6; padding: 10px;">
                 <p style="color: black; font-weight: bold;">Izin Sarana Kefarmasian (PBF)</p>
                 <br />
@@ -82,7 +100,7 @@ Jika diketahui bahwa izin sarana kefarmasian sudah tidak berlaku, maka harus dia
         </section>
 
 <!-- PAGE TIGA -->
-        <section v-show="pageTiga" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="pageTiga" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <div style="background-color: #EEECD6; padding: 10px;">
                 <p style="color: black; font-weight: bold;">Sertifikat CDOB dari BPOM dan/atau Rekomendasi Pemenuhan Aspek CDOB</p>
                 <br />
@@ -116,7 +134,7 @@ Jika diketahui sarana kefarmasian tidak memiliki sertifikat dari BPOM maka tinda
         </section>  
 
 <!-- PAGE EMPAT -->
-        <section v-show="pageEmpat" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="pageEmpat" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <div style="background-color: #EEECD6; padding: 10px;">
                 <p style="color: black; font-weight: bold;">Izin OSS</p>
                 <br />
@@ -148,7 +166,7 @@ NIB, IZIN  LOKASI, IZIN USAHA DAN IZIN OPERASIONAL/KOMERSIAL ( WAJIB KBLI 46492,
         </section>   
 
 <!-- PAGE LIMA -->
-        <section v-show="pageLima" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="pageLima" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <div style="background-color: #EEECD6; padding: 10px;">
                 <p style="color: black; font-weight: bold;">DATA APOTEKER PENANGGUNG JAWAB</p>
                 <br />
@@ -203,7 +221,7 @@ Pemeriksaan meliputi :
         </section>   
 
 <!-- PAGE ENAM -->
-        <section v-show="pageEnam" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="pageEnam" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <div style="background-color: #EEECD6; padding: 10px;">
                 <p style="color: black; font-weight: bold;">Gudang/Tempat penyimpanan Obat</p>
                 <br />
@@ -240,7 +258,7 @@ Layout gudang sesuai dengan yang dipersyaratkan untuk menjamin obat yang didistr
         </section>
 
 <!-- PAGE TUJUH -->
-        <section v-show="pageTujuh" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="pageTujuh" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <div style="background-color: #EEECD6; padding: 10px;">
                 <p style="color: black; font-weight: bold;">DOKUMENTASI</p>
                 <br />
@@ -269,7 +287,7 @@ Sesuai dengan peraturan dan prosedur yang berlaku untuk menghindari pemasukan se
         </section>      
 
 <!-- PAGE DELAPAN -->
-        <section v-show="pageDelapan" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="pageDelapan" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <div style="background-color: #EEECD6; padding: 10px;">
                 <p style="color: black; font-weight: bold;">Job description (APJ)</p>
                 <br />
@@ -299,7 +317,7 @@ Penting sekali otoritas APJ kewenangan full terkait Quality Assurance (QA)
         </section>  
 
 <!-- PAGE SEMBILAN -->
-        <section v-show="pageSembilan" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="pageSembilan" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <div style="background-color: #EEECD6; padding: 10px;">
                 <p style="color: black; font-weight: bold;">Job description (APJ)</p>
                 <br />
@@ -331,7 +349,7 @@ Sesuai dengan peraturan dan CDOB serta dilaksanakan dengan baik dan kontinyu. Pe
         </section>  
 
 <!-- PAGE SEPULUH -->
-        <section v-show="pageSepuluh" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="pageSepuluh" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <div style="background-color: #EEECD6; padding: 10px;">
                 <p style="color: black; font-weight: bold;">Pelaporan/Ereport PBF</p>
                 <br />
@@ -361,7 +379,7 @@ Laporan 3 bulanan dengan format lama (2018) dan format baru wajib untuk tahun 20
         </section>  
 
 <!-- PAGE SEBELAS -->
-        <section v-show="pageSebelas" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="pageSebelas" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <div style="background-color: #EEECD6; padding: 10px;">
                 <p style="color: black; font-weight: bold;">Data Upstream Supplier (Asal perolehan Obat)</p>
                 <br />
@@ -396,7 +414,7 @@ Harus sesuai peraturan perundang-undangan, tervalidasi, dan terkualifikasi. Haru
         </section>     
 
 <!-- PAGE DUA BELAS -->
-        <section v-show="pageDuaBelas" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="pageDuaBelas" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <div style="background-color: #EEECD6; padding: 10px;">
                 <p style="color: black; font-weight: bold;">Data Downstream Supplier (Pendistribusian Obat)</p>
                 <br />
@@ -431,7 +449,7 @@ Harus sesuai peraturan perundang-undangan, tervalidasi, dan terkualifikasi. Haru
         </section>    
 
 <!-- PAGE TIGA BELAS -->
-        <section v-show="pageTigaBelas" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="pageTigaBelas" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <div style="background-color: #EEECD6; padding: 10px;">
                 <p style="color: black; font-weight: bold;">Adanya Temuan dari BPOM (jika Ada)</p>
                 <br />
@@ -469,7 +487,7 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
         </section>  
 
 <!-- PAGE EMPAT BELAS -->
-        <section v-show="pageEmpatBelas" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="pageEmpatBelas" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <div style="background-color: #EEECD6; padding: 10px;">
                 <p style="color: black; font-weight: bold;">Dokumentasi Foto Sarana dan Temuan</p>
                 <br />
@@ -495,7 +513,7 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                 ref="upload"
                 :multiple="true"
                 v-model="files"
-                post-action="http://202.150.151.50/api-e-mosi/public/upload"
+                :post-action="`${this.$api}/upload`"
                 @input="onChangeFile"
             >
                 <img style="width: 60px;" :src="`${this.$assets}/images/upload-icon.png`" />
@@ -541,7 +559,8 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                 pageDuaBelas: false,
                 pageTigaBelas: false,
                 pageEmpatBelas: false,
-                files: []
+                files: [],
+                fotoLokasi: [],
             }
         },
         methods: {
@@ -576,6 +595,21 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                         })  
                     }
                 })      
+            },      
+
+            clickImageLokasi: function(id) {
+                const index = this.fotoLokasi.indexOf(id);
+                this.$buefy.dialog.confirm({
+                    message: 'Apakah anda yakin ingin menghapus foto ini?',
+                    onConfirm: () => {                    
+                        this.fotoLokasi.splice(index)
+                        this.$buefy.toast.open({
+                            message: `Foto berhasil dihapus`,
+                            position: 'is-bottom',
+                            type: 'is-success'
+                        })  
+                    }
+                })      
             },            
 
             submitProses: function() {
@@ -584,6 +618,7 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                 let data = {
                     DATA: this.form,
                     DATA_FILE: this.files,
+                    DATA_IMG_LOKASI: this.fotoLokasi,
                     USERNAME: this.username,
                     LONGLAT: this.longlat,
                     JENIS: 'pbf'
@@ -597,6 +632,7 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                             this.pageSatu = true
                             this.form = []
                             this.files = []
+                            this.fotoLokasi = []
                         } else {
                             this.$buefy.dialog.alert('Ops! Terjadi Kesalahan.')
                         }
@@ -607,6 +643,11 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                 // console.log('change file' + e)
                 this.$refs.upload.active = true
                 console.log(this.files)
+            },
+
+            onChangeFileLokasi: function(e) {
+                this.$refs.uploadFotoLokasi.active = true
+                console.log(this.fotoLokasi)
             },
 
             inputFile: function (newFile, oldFile) {

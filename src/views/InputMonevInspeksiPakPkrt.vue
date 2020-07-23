@@ -1,7 +1,7 @@
 <template>
     <div style="max-width: 450px; padding: 0px;" class="container">
         <!-- PAGE SATU -->
-        <section v-show="page1" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page1" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <div style="background-color: #EEECD6; padding: 10px;">
                 <p style="text-align: justify;">
 <font style="font-weight: bold;">PETUNJUK PENGISIAN</font><br />
@@ -32,7 +32,7 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
         </section>
 
         <!-- PAGE DUA -->
-        <section v-show="page2" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page2" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <p style="font-weight: bold;">Form A | Data Profil</p>
             <br />
             <b-field label="Nama Badan Hukum Perusahaan">
@@ -78,7 +78,7 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
 
         </section>
 
-        <section v-show="page3" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page3" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <p style="font-weight: bold;">Kategori Alat Kesehatan Yang Diproduksi</p><br />
             <div class="field">
                 <b-checkbox v-model="form.peralatan_kimia_klinik_dan_toksikologi_klinik"
@@ -352,7 +352,7 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
             </div>                                   
 
         </section> 
-        <section v-show="page4" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page4" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <br /> 
             <p style="font-weight: bold;">II. LOKASI DAN BANGUNAN</p>            
             <p style="font-weight: bold;">Lokasi Pabrik</p>            
@@ -489,7 +489,7 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
             </div>                                   
 
         </section> 
-        <section v-show="page5" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page5" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <br />
             <p style="font-weight: bold;">IV. DATA KARYAWAN</p>
             <br />
@@ -550,7 +550,7 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
 
         </section> 
 
-        <section v-show="page6" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page6" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <br />
             <p style="font-weight: bold;">FORM.B | PEMERIKSAAN SARANA PRODUKSI ALAT KESEHATAN DAN/ATAU PKRT</p>
             <p style="font-weight: bold;">I. SISTEM MANAJEMEN MUTU</p>
@@ -607,151 +607,151 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
             </b-select>                      
             <br />
             <p style="font-weight: bold;">Perusahaan Memiliki Protap Pembelian Bahan Baku Dan Bahan Pengemas</p>            
-            <b-select v-model="form.page_6_8" placeholder="Pilihan" expanded>
-                <option value="Ada">Ya</option>
-                <option value="Tidak">Tidak</option>
-            </b-select>                      
-            <br />
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penanganan Bahan Baku Dan Bahan Pengemas (Pemeriksaan Dan Penyimpanan)</p>            
             <b-select v-model="form.page_6_9" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Terkait Proses Produksi (Penimbangan Dan Pembuatan)</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penanganan Bahan Baku Dan Bahan Pengemas (Pemeriksaan Dan Penyimpanan)</p>            
             <b-select v-model="form.page_6_10" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penggunaan Fasilitas Bersama (Jika Ada)</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Terkait Proses Produksi (Penimbangan Dan Pembuatan)</p>            
             <b-select v-model="form.page_6_11" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Pengawasan Mutu Produk (In-Process Control Dan Produk Jadi)</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penggunaan Fasilitas Bersama (Jika Ada)</p>            
             <b-select v-model="form.page_6_12" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Pemberian Penandaan Nomor Bets/Lot/Seri, Tanggal Kadaluwarsa/Tanggal Pembuatan.</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Pengawasan Mutu Produk (In-Process Control Dan Produk Jadi)</p>            
             <b-select v-model="form.page_6_13" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Pengemasan Produk</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Pemberian Penandaan Nomor Bets/Lot/Seri, Tanggal Kadaluwarsa/Tanggal Pembuatan.</p>            
             <b-select v-model="form.page_6_14" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penyimpanan Produk</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Pengemasan Produk</p>            
             <b-select v-model="form.page_6_15" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Pengendalian Produk Yang Tidak Sesuai</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penyimpanan Produk</p>            
             <b-select v-model="form.page_6_16" placeholder="Pilihan" expanded>
+                <option value="Ada">Ya</option>
+                <option value="Tidak">Tidak</option>
+            </b-select>                      
+            <br />
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Pengendalian Produk Yang Tidak Sesuai</p>            
+            <b-select v-model="form.page_6_17" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>  
             <br />                    
             <p style="font-weight: bold;">Perusahaan Memiliki Protap Proses Sterilisasi Dan Validasi Steril (Jika Ada Produk Steril)</p>            
-            <b-select v-model="form.page_6_17" placeholder="Pilihan" expanded>
-                <option value="Ada">Ya</option>
-                <option value="Tidak">Tidak</option>
-            </b-select>                      
-            <br />                    
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penyaluran Produk (Termasuk Jumlah, Nomor Bets/Lot/Seri, Nomor Izin Edar Dan Tujuannya)</p>            
             <b-select v-model="form.page_6_18" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />                    
-            <p style="font-weight: bold;">Tersedia Protap Pembersihan/Pemeliharan Setiap Peralatan Produksi</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penyaluran Produk (Termasuk Jumlah, Nomor Bets/Lot/Seri, Nomor Izin Edar Dan Tujuannya)</p>            
             <b-select v-model="form.page_6_19" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />                    
-            <p style="font-weight: bold;">Tersedia Protap Pembersihan/Pemeliharaan Setiap Ruangan Produksi</p>            
+            <p style="font-weight: bold;">Tersedia Protap Pembersihan/Pemeliharan Setiap Peralatan Produksi</p>            
             <b-select v-model="form.page_6_20" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />                    
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Pengendalian Produk Dengan Umur Guna Terbatas Atau Memerlukan Penyimpanan Khusus Yang Dipersyaratkan (Jika Ada)</p>            
+            <p style="font-weight: bold;">Tersedia Protap Pembersihan/Pemeliharaan Setiap Ruangan Produksi</p>            
             <b-select v-model="form.page_6_21" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />                    
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penanganan Produk Kembalian (Return)</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Pengendalian Produk Dengan Umur Guna Terbatas Atau Memerlukan Penyimpanan Khusus Yang Dipersyaratkan (Jika Ada)</p>            
             <b-select v-model="form.page_6_22" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />                    
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penarikan Produk (Recall)</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penanganan Produk Kembalian (Return)</p>            
             <b-select v-model="form.page_6_23" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />                    
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Pemusnahan Produk</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penarikan Produk (Recall)</p>            
             <b-select v-model="form.page_6_24" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />                    
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Layanan Purna Jual,(Jika Ada)</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Pemusnahan Produk</p>            
             <b-select v-model="form.page_6_25" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />                    
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Pelatihan Teknis Tertentu (Jika Ada)</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Layanan Purna Jual,(Jika Ada)</p>            
             <b-select v-model="form.page_6_26" placeholder="Pilihan" expanded>
+                <option value="Ada">Ya</option>
+                <option value="Tidak">Tidak</option>
+            </b-select>                      
+            <br />                    
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Pelatihan Teknis Tertentu (Jika Ada)</p>            
+            <b-select v-model="form.page_6_27" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>  
             <br />                    
             <p style="font-weight: bold;">Perusahaan Memiliki Protap Kalibrasi Dan Verifikasi Alat Periksa Dan Alat Ukur</p>            
-            <b-select v-model="form.page_6_27" placeholder="Pilihan" expanded>
-                <option value="Ada">Ya</option>
-                <option value="Tidak">Tidak</option>
-            </b-select>                      
-            <br />                    
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Audit Internal</p>            
             <b-select v-model="form.page_6_28" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />                    
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penerimaan Dan Penanganan Keluhan Pelanggan Atau Customer Feedback</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Audit Internal</p>            
             <b-select v-model="form.page_6_29" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />                    
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Tindakan Perbaikan Dan Pencegahan</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penerimaan Dan Penanganan Keluhan Pelanggan Atau Customer Feedback</p>            
             <b-select v-model="form.page_6_30" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />                    
-            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penanganan Limbah</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Tindakan Perbaikan Dan Pencegahan</p>            
             <b-select v-model="form.page_6_31" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
             <br />                    
-            <p style="font-weight: bold;">Perusahaan Memiliki Buku Kepustakaan Tentang Alkes/PKRT</p>            
+            <p style="font-weight: bold;">Perusahaan Memiliki Protap Penanganan Limbah</p>            
             <b-select v-model="form.page_6_32" placeholder="Pilihan" expanded>
+                <option value="Ada">Ya</option>
+                <option value="Tidak">Tidak</option>
+            </b-select>                      
+            <br />                    
+            <p style="font-weight: bold;">Perusahaan Memiliki Buku Kepustakaan Tentang Alkes/PKRT</p>            
+            <b-select v-model="form.page_6_33" placeholder="Pilihan" expanded>
                 <option value="Ada">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                      
@@ -768,7 +768,7 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
             </div>                                   
 
         </section>
-        <section v-show="page7" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page7" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <br />
             <p style="font-weight: bold;">II. PENGELOLAAN SUMBER DAYA</p>
             <p style="font-weight: bold;">PERSONIL</p>
@@ -1083,7 +1083,7 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
             </div>                                   
 
         </section>
-        <section v-show="page8" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page8" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <br />
             <p style="font-weight: bold;">4. Ruang Produksi</p>
             <br />
@@ -1320,7 +1320,7 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
             </div>                                   
 
         </section>
-        <section v-show="page9" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page9" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <br />
             <p style="font-weight: bold;">6. Ruang Penyimpanan Produk Jadi</p>
             <br />
@@ -1517,25 +1517,25 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
             </b-select>            
             <br />
             <p style="font-weight: bold;">Tersedia Kontrol Hama Dan Catatannya</p>            
-            <b-select v-model="form.page_9_31" placeholder="Pilihan" expanded>
-                <option value="Ya">Ya</option>
-                <option value="Tidak">Tidak</option>
-            </b-select>            
-            <br />
-            <p style="font-weight: bold;">Tersedia Sumber Air</p>            
             <b-select v-model="form.page_9_32" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>            
             <br />
-            <p style="font-weight: bold;">Tersedia Fasilitas Penunjang Untuk Kebersihan</p>            
+            <p style="font-weight: bold;">Tersedia Sumber Air</p>            
             <b-select v-model="form.page_9_33" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>            
             <br />
-            <p style="font-weight: bold;">Tersedia Fasilitas Penunjang Untuk Keselamatan Kerja Karyawan(K3) Seperti Ear-Plug, Masker, Sarung Tangan, Dll</p>            
+            <p style="font-weight: bold;">Tersedia Fasilitas Penunjang Untuk Kebersihan</p>            
             <b-select v-model="form.page_9_34" placeholder="Pilihan" expanded>
+                <option value="Ya">Ya</option>
+                <option value="Tidak">Tidak</option>
+            </b-select>            
+            <br />
+            <p style="font-weight: bold;">Tersedia Fasilitas Penunjang Untuk Keselamatan Kerja Karyawan(K3) Seperti Ear-Plug, Masker, Sarung Tangan, Dll</p>            
+            <b-select v-model="form.page_9_35" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>            
@@ -1543,7 +1543,7 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
             <p style="font-weight: bold;">8. Ruang Bengkel (Untuk Produk Tertentu)</p>
             <br />
             <p style="font-weight: bold;">Ruang Bengkel Dengan Kapasitas Yang Memadai</p>            
-            <b-select v-model="form.page_9_35" placeholder="Pilihan" expanded>
+            <b-select v-model="form.page_9_36" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select> 
@@ -1551,73 +1551,73 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
             <p style="font-weight: bold;">Fasilitas Bengkel</p>
             <br />
             <p style="font-weight: bold;">Kondisi Ruangan Bersih</p>            
-            <b-select v-model="form.page_9_36" placeholder="Pilihan" expanded>
-                <option value="Ya">Ya</option>
-                <option value="Tidak">Tidak</option>
-            </b-select>
-            <br />
-            <p style="font-weight: bold;">Ventilasi Memadai</p>            
             <b-select v-model="form.page_9_37" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>
             <br />
-            <p style="font-weight: bold;">Penerangan Memadai</p>            
+            <p style="font-weight: bold;">Ventilasi Memadai</p>            
             <b-select v-model="form.page_9_38" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>
             <br />
-            <p style="font-weight: bold;">Lantai Plester</p>            
+            <p style="font-weight: bold;">Penerangan Memadai</p>            
             <b-select v-model="form.page_9_39" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>
             <br />
-            <p style="font-weight: bold;">Dinding Plester</p>            
+            <p style="font-weight: bold;">Lantai Plester</p>            
             <b-select v-model="form.page_9_40" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>
             <br />
-            <p style="font-weight: bold;">Atap</p>            
+            <p style="font-weight: bold;">Dinding Plester</p>            
             <b-select v-model="form.page_9_41" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>
             <br />
-            <p style="font-weight: bold;">Tersedia Peralatan Bengkel</p>            
+            <p style="font-weight: bold;">Atap</p>            
             <b-select v-model="form.page_9_42" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>
             <br />
-            <p style="font-weight: bold;">Tersedia Alat Pemadam Kebakaran Ringan (APAR) Yang Berfungsi Baik</p>            
+            <p style="font-weight: bold;">Tersedia Peralatan Bengkel</p>            
             <b-select v-model="form.page_9_43" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>
             <br />
-            <p style="font-weight: bold;">Tersedia Kontrol Hama Dan Catatannya</p>            
+            <p style="font-weight: bold;">Tersedia Alat Pemadam Kebakaran Ringan (APAR) Yang Berfungsi Baik</p>            
             <b-select v-model="form.page_9_44" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>
             <br />
-            <p style="font-weight: bold;">Tersedia Fasilitas Penunjang Untuk Kebersihan</p>            
+            <p style="font-weight: bold;">Tersedia Kontrol Hama Dan Catatannya</p>            
             <b-select v-model="form.page_9_45" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>
             <br />
-            <p style="font-weight: bold;">Tersedia Fasilitas Penunjang Untuk Keamanan Listrik</p>            
+            <p style="font-weight: bold;">Tersedia Fasilitas Penunjang Untuk Kebersihan</p>            
             <b-select v-model="form.page_9_46" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>
             <br />
-            <p style="font-weight: bold;">RowTersedia Fasilitas Penunjang Untuk Keselamatan Kerja Karyawan(K3) Seperti Ear-Plug, Masker, Sarung Tangan, Dll 3</p>            
+            <p style="font-weight: bold;">Tersedia Fasilitas Penunjang Untuk Keamanan Listrik</p>            
             <b-select v-model="form.page_9_47" placeholder="Pilihan" expanded>
+                <option value="Ya">Ya</option>
+                <option value="Tidak">Tidak</option>
+            </b-select>
+            <br />
+            <p style="font-weight: bold;">RowTersedia Fasilitas Penunjang Untuk Keselamatan Kerja Karyawan(K3) Seperti Ear-Plug, Masker, Sarung Tangan, Dll 3</p>            
+            <b-select v-model="form.page_9_48" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>
@@ -1625,25 +1625,25 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
             <p style="font-weight: bold;">9. Ruangan Penanganan Limbah (Padat Dan/Atau Cair)</p>
             <br />
             <p style="font-weight: bold;">Ruangan Penyimpanan Limbah (Padat Dan/Atau Cair) Sementara Apabila Limbah Dikelola Oleh Pihak Ketiga</p>            
-            <b-select v-model="form.page_9_48" placeholder="Pilihan" expanded>
-                <option value="Ya">Ya</option>
-                <option value="Tidak">Tidak</option>
-            </b-select>            
-            <br />
-            <p style="font-weight: bold;">Tersedia Kontrak Kerjasama Dengan Pihak Ketiga</p>            
             <b-select v-model="form.page_9_49" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>            
             <br />
-            <p style="font-weight: bold;">Tersedia Fasilitas Pengolahan Limbah (Padat/Cair)</p>            
+            <p style="font-weight: bold;">Tersedia Kontrak Kerjasama Dengan Pihak Ketiga</p>            
             <b-select v-model="form.page_9_50" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>            
             <br />
-            <p style="font-weight: bold;">Tersedia Rekaman Penyimpanan Dan/Atau Pengolahan Limbah (Padat/Cair)</p>            
+            <p style="font-weight: bold;">Tersedia Fasilitas Pengolahan Limbah (Padat/Cair)</p>            
             <b-select v-model="form.page_9_51" placeholder="Pilihan" expanded>
+                <option value="Ya">Ya</option>
+                <option value="Tidak">Tidak</option>
+            </b-select>            
+            <br />
+            <p style="font-weight: bold;">Tersedia Rekaman Penyimpanan Dan/Atau Pengolahan Limbah (Padat/Cair)</p>            
+            <b-select v-model="form.page_9_52" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>            
@@ -1659,7 +1659,7 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
             </div>                                   
 
         </section> 
-        <section v-show="page10" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page10" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <br />
             <p style="font-weight: bold;">III. REALISASI PRODUK</p>
             <p style="font-weight: bold;">1. Penyiapan Bahan Baku Dan Bahan Pengemas</p>
@@ -2015,7 +2015,7 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
 
         </section>                                                                        
 <!-- PAGE EMPAT BELAS -->
-        <section v-show="page11" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page11" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <br />
             <p style="font-weight: bold;">VI. SARANA DAN PRASARANA PENDUKUNG</p>
             <br />         

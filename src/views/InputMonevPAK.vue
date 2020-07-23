@@ -1,7 +1,7 @@
 <template>
     <div style="max-width: 450px; padding: 0px;" class="container">
         <!-- PAGE SATU -->
-        <section v-show="page1" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page1" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <div style="background-color: #EEECD6; padding: 10px;">
                 <p style="text-align: justify;">
 <font style="font-weight: bold;">PETUNJUK PENGISIAN</font><br />
@@ -33,7 +33,7 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
         </section>
 
         <!-- PAGE DUA -->
-        <section v-show="page2" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page2" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <p style="font-weight: bold;">Form A | Data Profil</p>
             <br />
             <b-field label="Nama Badan Hukum Perusahaan">
@@ -192,7 +192,7 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
             </b-field>    
             <p style="font-weight: bold;">Bekerja Full Time</p>            
             <b-select v-model="form.data_karyawan_bekerja_fulltime" placeholder="Pilihan" expanded>
-                <option value="Ya">Tidak</option>
+                <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
                 <option value="Lainnya">Lainnya</option>
             </b-select>         
@@ -205,11 +205,12 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
             <br />
             <p style="font-weight: bold;">Tenaga Teknisi (Khusus PAK yang menyalurkan Alkes Elektromedik dan Instrumen Produk IVD)</p>            
             <b-select v-model="form.data_karyawan_tenaga_teknis" placeholder="Pilihan" expanded>
-                <option value="Ada">Tidak</option>
+                <option value="Ada">Ada</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                                                                                              
 
             <br />
+            <!-- <b-button type="is-primary is-large" @click="submitProses" expanded>Proses</b-button> -->
             <div class="columns is-mobile">
                 <div class="column is-half">
                     <b-button type="is-warning is-large" v-on:click="clearPage(); page1 = true" expanded>Kembali</b-button>
@@ -221,7 +222,7 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
 
         </section>
 
-        <section v-show="page3" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page3" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <p style="color: black; font-weight: bold;">I. SISTEM MANAJEMEN MUTU</p>
             <p style="color: black; font-weight: bold;">PERSYARATAN UMUM</p>
             <br />
@@ -431,7 +432,7 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
             </div>                                   
 
         </section> 
-        <section v-show="page4" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page4" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <p style="font-weight: bold;">II. Pengelolaan Sumber Daya</p>
             <p style="font-weight: bold;">Personalia dan Pelatihan</p>
             <br />
@@ -519,7 +520,7 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
             </div>                                   
 
         </section> 
-        <section v-show="page5" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page5" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <br />
             <p style="font-weight: bold;">III. BANGUNGAN DAN FASILITAS</p>
             <br />
@@ -749,7 +750,7 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
 
         </section> 
 
-        <section v-show="page6" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page6" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <br />
             <p style="font-weight: bold;">IV. Penyimpanan Dan Penanganan Persediaan</p>
             <p style="font-weight: bold;">Penerimaan</p>
@@ -788,13 +789,13 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
             </b-select>                        
             <br />
             <p style="font-weight: bold;">Melakukan Pengukuran Suhu Alat Kesehatan Diagnostik In Vitro Yang Diterima</p>            
-            <b-select v-model="form.data_page6_5" placeholder="Pilihan" expanded>
+            <b-select v-model="form.data_page6_6" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                        
             <br />
             <p style="font-weight: bold;">Tersedia Catatan Kondisi Suhu Alat Kesehatan Diagnostik In Vitro Yang Diterima</p>            
-            <b-select v-model="form.data_page6_5" placeholder="Pilihan" expanded>
+            <b-select v-model="form.data_page6_7" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>
@@ -802,61 +803,61 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
             <p style="font-weight: bold;">Penyimpanan</p>            
             <br />
             <p style="font-weight: bold;">Produk Disimpan Sesuai Dengan Kondisi Yang Dibutuhkan Alat Kesehatan Untuk Tetap Terjamin Keamanan, Mutu Dan Manfaatnya.</p>            
-            <b-select v-model="form.data_page6_6" placeholder="Pilihan" expanded>
-                <option value="Ya">Ya</option>
-                <option value="Tidak">Tidak</option>
-            </b-select>            
-            <br />
-            <p style="font-weight: bold;">Penataan Produk Sesuai Kelompok Alat Kesehatan</p>            
-            <b-select v-model="form.data_page6_7" placeholder="Pilihan" expanded>
-                <option value="Ya">Ya</option>
-                <option value="Tidak">Tidak</option>
-            </b-select>            
-            <br />
-            <p style="font-weight: bold;">Produk Tidak Diletakkan Langsung Diatas Lantai</p>            
             <b-select v-model="form.data_page6_8" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>            
             <br />
-            <p style="font-weight: bold;">Melakukan Pencatatan Stock Produk Secara Tertib</p>            
+            <p style="font-weight: bold;">Penataan Produk Sesuai Kelompok Alat Kesehatan</p>            
             <b-select v-model="form.data_page6_9" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>            
             <br />
-            <p style="font-weight: bold;">Produk Yang Telah Kedaluwarsa/Rusak Disimpan Terpisah Dengan Produk Yang Masih Layak Pakai Dan Dilengkapi Dengan Penandaan</p>            
+            <p style="font-weight: bold;">Produk Tidak Diletakkan Langsung Diatas Lantai</p>            
             <b-select v-model="form.data_page6_10" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>            
             <br />
-            <p style="font-weight: bold;">Melaksanakan Mekanisme Fefo/Fifo (First Expire First Out/ First In First Out)</p>            
+            <p style="font-weight: bold;">Melakukan Pencatatan Stock Produk Secara Tertib</p>            
             <b-select v-model="form.data_page6_11" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>            
             <br />
-            <p style="font-weight: bold;">Tersedia Catatan Kalibrasi Peralatan Yang Mendukung Proses Penyimpanan</p>            
+            <p style="font-weight: bold;">Produk Yang Telah Kedaluwarsa/Rusak Disimpan Terpisah Dengan Produk Yang Masih Layak Pakai Dan Dilengkapi Dengan Penandaan</p>            
             <b-select v-model="form.data_page6_12" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>            
             <br />
-            <p style="font-weight: bold;">Tersedia Catatan Kegiatan Kontrol Hama</p>            
+            <p style="font-weight: bold;">Melaksanakan Mekanisme Fefo/Fifo (First Expire First Out/ First In First Out)</p>            
             <b-select v-model="form.data_page6_13" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>            
             <br />
-            <p style="font-weight: bold;">Tersedia Catatan Kontrol Suhu Dan Kelembaban</p>            
+            <p style="font-weight: bold;">Tersedia Catatan Kalibrasi Peralatan Yang Mendukung Proses Penyimpanan</p>            
             <b-select v-model="form.data_page6_14" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>            
             <br />
-            <p style="font-weight: bold;">Produk Yang Disimpan Memiliki Penandaan/Labelling Alkes Lengkap (Nama Produk, Type/Model, Nomor Batch/Lot/Seri, Tanggal Kadaluarsa, Nomor Izin Edar, Nama Pabrik, Alamat Pabrik, Nama Penyalur , Alamat Penyalur, Spesifikasi Alat/Kegunaan/Cara Penggunaan, Tanda Peringatan/Perhatian (Contoh Produk Secara Acak /Sample)</p>            
+            <p style="font-weight: bold;">Tersedia Catatan Kegiatan Kontrol Hama</p>            
             <b-select v-model="form.data_page6_15" placeholder="Pilihan" expanded>
+                <option value="Ya">Ya</option>
+                <option value="Tidak">Tidak</option>
+            </b-select>            
+            <br />
+            <p style="font-weight: bold;">Tersedia Catatan Kontrol Suhu Dan Kelembaban</p>            
+            <b-select v-model="form.data_page6_16" placeholder="Pilihan" expanded>
+                <option value="Ya">Ya</option>
+                <option value="Tidak">Tidak</option>
+            </b-select>            
+            <br />
+            <p style="font-weight: bold;">Produk Yang Disimpan Memiliki Penandaan/Labelling Alkes Lengkap (Nama Produk, Type/Model, Nomor Batch/Lot/Seri, Tanggal Kadaluarsa, Nomor Izin Edar, Nama Pabrik, Alamat Pabrik, Nama Penyalur , Alamat Penyalur, Spesifikasi Alat/Kegunaan/Cara Penggunaan, Tanda Peringatan/Perhatian (Contoh Produk Secara Acak /Sample)</p>            
+            <b-select v-model="form.data_page6_17" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>
@@ -864,31 +865,31 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
             <p style="font-weight: bold; background-color: orange;">Melakukan Prosedur Penyimpanan Dengan Rantai Dingin Untuk Alkes Diagnostik In Vitro Yang Membutuhkan Suhu Refrigerator / Cold Room / Freezer / Deep Freezer</p>
             <br />
             <p style="font-weight: bold;">Alkes Diagnostik In Vitro Disimpan Dalam Lemari Pendingin/Cold Storage/Freezer Yang Dirawat Dengan Baik</p>            
-            <b-select v-model="form.data_page6_16" placeholder="Pilihan" expanded>
-                <option value="Ya">Ya</option>
-                <option value="Tidak">Tidak</option>
-            </b-select>            
-            <br />
-            <p style="font-weight: bold;">Tersedia Catatan Kontrol Suhu Lemari Pendingin/Cold Storage/Freezer</p>            
-            <b-select v-model="form.data_page6_17" placeholder="Pilihan" expanded>
-                <option value="Ya">Ya</option>
-                <option value="Tidak">Tidak</option>
-            </b-select>            
-            <br />
-            <p style="font-weight: bold;">Melakukan Pemetaan Suhu</p>            
             <b-select v-model="form.data_page6_18" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>            
             <br />
-            <p style="font-weight: bold;">Tersedia Catatan Pemetaan Suhu</p>            
+            <p style="font-weight: bold;">Tersedia Catatan Kontrol Suhu Lemari Pendingin/Cold Storage/Freezer</p>            
             <b-select v-model="form.data_page6_19" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>            
             <br />
-            <p style="font-weight: bold;">Melaksanakan Prosedur Penanganan Alkes Diagnostik In Vitro Apabila Listrik Padam</p>            
+            <p style="font-weight: bold;">Melakukan Pemetaan Suhu</p>            
             <b-select v-model="form.data_page6_20" placeholder="Pilihan" expanded>
+                <option value="Ya">Ya</option>
+                <option value="Tidak">Tidak</option>
+            </b-select>            
+            <br />
+            <p style="font-weight: bold;">Tersedia Catatan Pemetaan Suhu</p>            
+            <b-select v-model="form.data_page6_21" placeholder="Pilihan" expanded>
+                <option value="Ya">Ya</option>
+                <option value="Tidak">Tidak</option>
+            </b-select>            
+            <br />
+            <p style="font-weight: bold;">Melaksanakan Prosedur Penanganan Alkes Diagnostik In Vitro Apabila Listrik Padam</p>            
+            <b-select v-model="form.data_page6_22" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>  
@@ -896,19 +897,19 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
             <p style="font-weight: bold; background-color: orange;">Pengiriman dan Penyerahan </p>  
             <br />
             <p style="font-weight: bold;">Prosedur Pengiriman Produk Dilakukan Di Area/Tempat Yang Sesuai Dengan Kapasitas/Kondisi Produk</p>            
-            <b-select v-model="form.data_page6_21" placeholder="Pilihan" expanded>
+            <b-select v-model="form.data_page6_23" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                    
             <br />
             <p style="font-weight: bold;">Melaksanakan Pemeriksaan Produk Yang Akan Dikirim, Minimal Meliputi (Nama Produk, Nama Produsen/Asal Barang, Nomor Izin Edar, Jumlah , Kondisi Fisik Kemasan/Produk, Keterangan Pada Label: Jangka Waktu Kedaluwarsa, Nomor Bets/Tipe/Seri.</p>            
-            <b-select v-model="form.data_page6_22" placeholder="Pilihan" expanded>
+            <b-select v-model="form.data_page6_24" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                    
             <br />
             <p style="font-weight: bold;">Melakukan Pemeriksaan Alat Transportasi Untuk Memastikan Kesesuaian Kapasitas Dan Persyaratan Dari Produk.</p>            
-            <b-select v-model="form.data_page6_23" placeholder="Pilihan" expanded>
+            <b-select v-model="form.data_page6_25" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select> 
@@ -916,37 +917,37 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
             <p style="font-weight: bold; background-color: orange;">Melakukan Prosedur Pengiriman Dan Penyerahan Dengan Sistem Rantai Dingin Untuk Alkes Diagnostik In Vitro Yang Membutuhkan Suhu Refrigerator / Cold Room / Freezer / Deep Freezer</p>  
             <br />
             <p style="font-weight: bold;">Persiapan Pengiriman Dilakukan Di Area Pengiriman Dengan Suhu Dingin/Sejuk (8℃ S/D 15°C)</p>            
-            <b-select v-model="form.data_page6_24" placeholder="Pilihan" expanded>
-                <option value="Ya">Ya</option>
-                <option value="Tidak">Tidak</option>
-            </b-select>                             
-            <br />
-            <p style="font-weight: bold;">Alkes Diagnostik In Vitro Dikemas Dengan Menggunakan Packaging Material (Cold Box Dan Cold Pack) Yang Tervalidasi</p>            
-            <b-select v-model="form.data_page6_25" placeholder="Pilihan" expanded>
-                <option value="Ya">Ya</option>
-                <option value="Tidak">Tidak</option>
-            </b-select>                             
-            <br />
-            <p style="font-weight: bold;">Melakukan Pengukuran Suhu Cold Box Sebelum Dikirim</p>            
             <b-select v-model="form.data_page6_26" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                             
             <br />
-            <p style="font-weight: bold;">Tersedia Catatan Kondisi Suhu Cold Box Yang Dikirim</p>            
+            <p style="font-weight: bold;">Alkes Diagnostik In Vitro Dikemas Dengan Menggunakan Packaging Material (Cold Box Dan Cold Pack) Yang Tervalidasi</p>            
             <b-select v-model="form.data_page6_27" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                             
             <br />
-            <p style="font-weight: bold;">Melakukan Pengukuran Suhu Cold Box Pada Saat Penyerahan Alkes Diagnostik In Vitro Kepada Konsumen</p>            
+            <p style="font-weight: bold;">Melakukan Pengukuran Suhu Cold Box Sebelum Dikirim</p>            
             <b-select v-model="form.data_page6_28" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                             
             <br />
-            <p style="font-weight: bold;">Tersedia Catatan Kondisi Suhu Cold Box Yang Diterima Konsumen</p>            
+            <p style="font-weight: bold;">Tersedia Catatan Kondisi Suhu Cold Box Yang Dikirim</p>            
             <b-select v-model="form.data_page6_29" placeholder="Pilihan" expanded>
+                <option value="Ya">Ya</option>
+                <option value="Tidak">Tidak</option>
+            </b-select>                             
+            <br />
+            <p style="font-weight: bold;">Melakukan Pengukuran Suhu Cold Box Pada Saat Penyerahan Alkes Diagnostik In Vitro Kepada Konsumen</p>            
+            <b-select v-model="form.data_page6_30" placeholder="Pilihan" expanded>
+                <option value="Ya">Ya</option>
+                <option value="Tidak">Tidak</option>
+            </b-select>                             
+            <br />
+            <p style="font-weight: bold;">Tersedia Catatan Kondisi Suhu Cold Box Yang Diterima Konsumen</p>            
+            <b-select v-model="form.data_page6_31" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select> 
@@ -954,55 +955,55 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
             <p style="font-weight: bold; background-color: orange;">Instalasi, Commisioning Dan Pelayanan Purna Jual Untuk Alkes Elektromedik Dan/Atau Instrumen Diagnostik In Vitro</p>
             <br />
             <p style="font-weight: bold;">Melaksanakan Prosedur Instalasi/Pemasangan Sesuai Dengan Petunjuk/Prosedur Pemasangan Dari Pabrik</p>            
-            <b-select v-model="form.data_page6_30" placeholder="Pilihan" expanded>
-                <option value="Ya">Ya</option>
-                <option value="Tidak">Tidak</option>
-            </b-select>                                        
-            <br />
-            <p style="font-weight: bold;">Melaksanakan Commissioning (Pemeriksaan Fisik Setalah Instalasi Dan Pengujian (Uji Fungsi/Uji Keselamatan/Aplikasi)</p>            
-            <b-select v-model="form.data_page6_31" placeholder="Pilihan" expanded>
-                <option value="Ya">Ya</option>
-                <option value="Tidak">Tidak</option>
-            </b-select>                                        
-            <br />
-            <p style="font-weight: bold;">Tersedia Catatan/Dokumentasi Pelaksanaan Instalasi Dan Commissioning</p>            
             <b-select v-model="form.data_page6_32" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                                        
             <br />
-            <p style="font-weight: bold;">Melaksanakan Pelatihan Bagi Tenaga Operator/ Tenaga Teknis Fasilitas Pelayanan Kesehatan.</p>            
+            <p style="font-weight: bold;">Melaksanakan Commissioning (Pemeriksaan Fisik Setalah Instalasi Dan Pengujian (Uji Fungsi/Uji Keselamatan/Aplikasi)</p>            
             <b-select v-model="form.data_page6_33" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                                        
             <br />
-            <p style="font-weight: bold;">Tersedia Catatan/Dokumentasi Kegiatan Pelatihan Bagi Tenaga Operator/ Tenaga Teknis Fasilitas Pelayanan Kesehatan</p>            
+            <p style="font-weight: bold;">Tersedia Catatan/Dokumentasi Pelaksanaan Instalasi Dan Commissioning</p>            
             <b-select v-model="form.data_page6_34" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                                        
             <br />
-            <p style="font-weight: bold;">Memiliki Dokumen Informasi Yang Mencakup Identitas Dan Spesifikasi Produk, Prosedur, Buku Petunjuk Pemasangan, Penggunaan Dan Pemeliharaan Atau Media Pendukung Lainnya Yang Menggunakan Bahasa Indonesia</p>            
+            <p style="font-weight: bold;">Melaksanakan Pelatihan Bagi Tenaga Operator/ Tenaga Teknis Fasilitas Pelayanan Kesehatan.</p>            
             <b-select v-model="form.data_page6_35" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                                        
             <br />
-            <p style="font-weight: bold;">Melaksanakan Layanan Purna Jual (Perbaikan/Pemeliharaan Alkes)</p>            
+            <p style="font-weight: bold;">Tersedia Catatan/Dokumentasi Kegiatan Pelatihan Bagi Tenaga Operator/ Tenaga Teknis Fasilitas Pelayanan Kesehatan</p>            
             <b-select v-model="form.data_page6_36" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                                        
             <br />
-            <p style="font-weight: bold;">Tersedia Catatan/Dokumentasi Layanan Purna Jual</p>            
+            <p style="font-weight: bold;">Memiliki Dokumen Informasi Yang Mencakup Identitas Dan Spesifikasi Produk, Prosedur, Buku Petunjuk Pemasangan, Penggunaan Dan Pemeliharaan Atau Media Pendukung Lainnya Yang Menggunakan Bahasa Indonesia</p>            
             <b-select v-model="form.data_page6_37" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                                        
             <br />
-            <p style="font-weight: bold;">Dokumen Kegiatan Layanan Purna Jual Terpelihara Dengan Baik</p>            
+            <p style="font-weight: bold;">Melaksanakan Layanan Purna Jual (Perbaikan/Pemeliharaan Alkes)</p>            
             <b-select v-model="form.data_page6_38" placeholder="Pilihan" expanded>
+                <option value="Ya">Ya</option>
+                <option value="Tidak">Tidak</option>
+            </b-select>                                        
+            <br />
+            <p style="font-weight: bold;">Tersedia Catatan/Dokumentasi Layanan Purna Jual</p>            
+            <b-select v-model="form.data_page6_39" placeholder="Pilihan" expanded>
+                <option value="Ya">Ya</option>
+                <option value="Tidak">Tidak</option>
+            </b-select>                                        
+            <br />
+            <p style="font-weight: bold;">Dokumen Kegiatan Layanan Purna Jual Terpelihara Dengan Baik</p>            
+            <b-select v-model="form.data_page6_40" placeholder="Pilihan" expanded>
                 <option value="Ya">Ya</option>
                 <option value="Tidak">Tidak</option>
             </b-select>                                        
@@ -1019,7 +1020,7 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
             </div>                                   
 
         </section>
-        <section v-show="page7" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page7" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <br />
             <p style="font-weight: bold; background-color: orange;">V. Mampu Telusur Produk (Traceability)</p>
             <br />
@@ -1130,7 +1131,7 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
             </div>                                   
 
         </section>
-        <section v-show="page8" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page8" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <br />
             <p style="font-weight: bold; background-color: orange;">IX. Pemusnahan Alat Kehatan</p>
             <br /> 
@@ -1280,7 +1281,7 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
 
         </section>                                                     
 <!-- PAGE EMPAT BELAS -->
-        <section v-show="page9" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="page9" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
             <p  style="font-weight: normal; background-color: white;">
                 Kesimpulan / Saran / Rekomendasi <br />
                 Berikan Kesimpulan / Saran / Rekomendasi dari Hasil Inspeksi Perusahaan.
@@ -1314,7 +1315,7 @@ Upload data dukung hasil inspeksi dalam 1(satu) file format PDF diantaranya:<br 
                 ref="upload"
                 :multiple="true"
                 v-model="files"
-                post-action="http://202.150.151.50/api-e-mosi/public/upload"
+                :post-action="`${this.$api}/upload`"
                 @input="onChangeFile"
             >
                 <img style="width: 60px;" :src="`${this.$assets}/images/upload-icon.png`" />
