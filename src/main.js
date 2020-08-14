@@ -12,8 +12,8 @@ Vue.use(Buefy)
 Vue.component('file-upload', VueUploadComponent)
 Vue.config.productionTip = false
 
-// Vue.prototype.$api = 'http://localhost:8000';
-Vue.prototype.$api = "http://202.150.151.50/api-e-mosi/public";
+Vue.prototype.$api = 'http://localhost:8000';
+// Vue.prototype.$api = "http://202.150.151.50/api-e-mosi/public";
 Vue.prototype.$assets = 'http://202.150.151.50/e-mosi/public-assets';
 Vue.prototype.$http = axios;
 

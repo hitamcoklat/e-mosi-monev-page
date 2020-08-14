@@ -1,7 +1,16 @@
 <template>
     <div style="max-width: 450px; padding: 0px;" class="container">
         <!-- PAGE SATU -->
-        <section v-if="pageSatu" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+        <section v-if="pageSatu" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">            
+            <p style="font-weight: bold;">Pilih Petugas {{isUpdate}}</p><br />
+            <button style="margin: 5px;" v-for="(item, index) in petugas" :key="item" @click="addPetugas(item)" class="button is-link is-outlined">{{item}}</button>           
+            <button style="margin: 5px;" @click="promptLainnya" class="button is-link is-outlined">Lainnya</button>           
+            <b-field label="Petugas yang dipilih">
+                <b-input v-model="selectedPetugasString"  value=""></b-input>
+            </b-field>              
+            <b-button type="is-danger" @click="resetPetugas" expanded>Reset Petugas</b-button>
+            <br />
+            <br />
             <p style="font-weight: bold;">Upload Foto Lokasi</p>
             <ul>
                 <li v-if="fotoLokasi.length > 0" v-for="(item, index) in fotoLokasi">
@@ -50,7 +59,8 @@
             </b-field>
 
             <div class="buttons">
-                <b-button v-on:click="clearPage(); pageDua = true" type="is-primary is-large" expanded>Next</b-button>
+                <b-button style="width: 46.3%; margin-right: 1em;" v-on:click="saveDraft();" type="is-warning is-large" expanded>Save Draft</b-button>
+                <b-button style="width: 46.3%;" v-on:click="clearPage(); pageDua = true" type="is-primary is-large" expanded>Next</b-button>
                 <!-- <b-button v-on:click="submitProses();" type="is-primary is-large" expanded>Submit</b-button> -->
             </div>        
   
@@ -544,6 +554,9 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                 isLoading: false,
                 name: 'John Silver',
                 form: [],
+                petugas: ['Warningsih', 'Rd Hermalia', 'Yura Kalfataru', 'Heru Syafarudin', 'Mega Purnamasari', 'Susy Susilawaty', 'Arief Rachman', 'Susilawati', 'Seja', 'Ade Lili', 'Siti', 'Anti', 'Prima Eko', 'Mukhlis', 'Gita', 'Amir', 'APBD'],
+                selectedPetugas: [],
+                selectedPetugasString: '',
                 listKabkot: ['Kabupaten Bogor', 'Kota Depok', 'Kota Bekasi', 'Kota Cirebon', 'Kota Banjar', 'Kota Tasikmalaya', 'Kota Cimahi', 'Kota Bandung', 'Kota Sukabumi', 'Kota Bogor', 'Kabupaten Bandung Barat', 'Kabupaten Bekasi', 'Kabupaten Karawang', 'Kabupaten Purwakarta', 'Kabupaten Subang', 'Kabupaten Indramayu', 'Kabupaten Sumedang', 'Kabupaten Majalengka', 'Kabupaten Cirebon', 'Kabupaten Kuningan', 'Kabupaten Ciamis', 'Kabupaten Tasikmalaya', 'Kabupaten Garut', 'Kabupaten Cianjur', 'Kabupaten Sukabumi'],
                 pageSatu: true,
                 pageDua: false,
@@ -561,6 +574,7 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                 pageEmpatBelas: false,
                 files: [],
                 fotoLokasi: [],
+                isUpdate: false
             }
         },
         methods: {
@@ -610,6 +624,49 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                         })  
                     }
                 })      
+            },
+            
+            saveDraft: function() {
+                this.submitProses()
+            },
+
+            addPetugas: function(petugas) {
+                console.log(petugas)
+                this.selectedPetugas.push(petugas)
+                this.selectedPetugasString = this.selectedPetugas.toString();
+                console.log(this.selectedPetugas)
+            },
+
+            resetPetugas: function() {
+                this.selectedPetugas = []
+                this.selectedPetugasString = ''
+            },
+
+            fetchData: function(id) {
+                this.form = []
+                this.files = []
+                this.fotoLokasi = []
+                this.$http.get(this.$api + '/read-monev?id=' + id + '&jenis=monevpbf')
+                    .then((res) => {
+                        console.log(res)
+                        this.form = res.data.data.CONTENT.content
+                        this.files = res.data.data.CONTENT.data_file,
+                        this.fotoLokasi = res.data.data.CONTENT.data_foto_lokasi                     
+                    })                   
+            },
+
+            promptLainnya() {
+                this.$buefy.dialog.prompt({
+                    message: `Masukan nama petugas`,
+                    inputAttrs: {
+                        placeholder: 'cth: Walter',
+                        maxlength: 99
+                    },
+                    trapFocus: true,
+                    onConfirm: (value) => {
+                        this.addPetugas(value)
+                    }
+                })
             },            
 
             submitProses: function() {
@@ -679,8 +736,13 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
         },
 
         created() {
-            console.log(this.username)
-            console.log(this.longlat)
+            console.log(this.$route.query.edit) 
+            console.log(this.$route.query.id) 
+            if(this.$route.query.edit == 'true') {
+                this.isUpdate = true
+                this.fetchData(this.$route.query.id)
+            }
         }
+        
     }
 </script>

@@ -212,8 +212,13 @@ Cara Penghitungan Tingkat Kepatuhan CDAKB<br />
             <br />
             <!-- <b-button type="is-primary is-large" @click="submitProses" expanded>Proses</b-button> -->
             <div class="columns is-mobile">
+                <div class="column is-full">
+                    <b-button type="is-warning is-large" v-on:click="clearPage(); page3 = true" expanded>Save Draft</b-button>
+                </div>
+            </div>              
+            <div class="columns is-mobile">
                 <div class="column is-half">
-                    <b-button type="is-warning is-large" v-on:click="clearPage(); page1 = true" expanded>Kembali</b-button>
+                    <b-button type="is-danger is-large" v-on:click="clearPage(); page1 = true" expanded>Kembali</b-button>
                 </div>
                 <div class="column is-half">
                     <b-button type="is-primary is-large" v-on:click="clearPage(); page3 = true" expanded>Next</b-button>
