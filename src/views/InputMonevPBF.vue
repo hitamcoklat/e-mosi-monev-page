@@ -513,21 +513,23 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                 </p>
             </div>
             <br />
-            <p style="font-weight: bold;">Foto Pemeriksaan</p>
+            <p style="font-weight: bold;">Upload File Dokumen</p>
             <ul>
-                <li v-if="files.length > 0" v-for="(item, index) in files">
+                <li style="border: 1px solid #CCC; margin-top: 1em;" v-if="files.length > 0" v-for="(item, index) in files">
                     <img @click="clickImage(index)" style="width: 100%;" src="http://202.150.151.50/e-mosi/public-assets/images/doc-icon.png" />
+                    <span style="margin: 1em; font-weight: bold; text-transform: uppercase;">{{namaFiles[index]}}</span>
                 </li>
             </ul>    
             <file-upload
+                style="width: 100%; margin-top: 1em; margin-bottom; 1em;"
                 ref="upload"
                 :multiple="true"
                 v-model="files"
                 :post-action="`${this.$api}/upload`"
                 @input="onChangeFile"
             >
-                <img style="width: 60px;" :src="`${this.$assets}/images/upload-icon.png`" />
-                
+                <b-button type="is-success is-light" expanded rounded>Pilih File / Dokumen</b-button>
+                <!-- <img style="width: 60px;" :src="`${this.$assets}/images/upload-icon.png`" /> -->
             </file-upload>
 
             <div class="columns is-mobile">
@@ -573,6 +575,7 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                 pageTigaBelas: false,
                 pageEmpatBelas: false,
                 files: [],
+                namaFiles: [],
                 fotoLokasi: [],
                 isUpdate: false
             }
@@ -598,10 +601,12 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
 
             clickImage: function(id) {
                 const index = this.files.indexOf(id);
+                const indexName = this.namaFiles.indexOf(id);
                 this.$buefy.dialog.confirm({
                     message: 'Apakah anda yakin ingin menghapus file ini?',
-                    onConfirm: () => {                    
+                    onConfirm: () => {
                         this.files.splice(index)
+                        this.namaFiles.splice(indexName)
                         this.$buefy.toast.open({
                             message: `File berhasil dihapus`,
                             position: 'is-bottom',
@@ -609,7 +614,7 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                         })  
                     }
                 })      
-            },      
+            },     
 
             clickImageLokasi: function(id) {
                 const index = this.fotoLokasi.indexOf(id);
@@ -649,6 +654,7 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                 this.$http.get(this.$api + '/read-monev?id=' + id + '&jenis=monevpbf')
                     .then((res) => {
                         console.log(res)
+                        this.selectedPetugasString = res.data.data.CONTENT.content.petugas.toString()
                         this.form = res.data.data.CONTENT.content
                         this.files = res.data.data.CONTENT.data_file,
                         this.fotoLokasi = res.data.data.CONTENT.data_foto_lokasi                     
@@ -670,7 +676,14 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
             },            
 
             submitProses: function() {
-                console.log(this.form)
+                if(this.files.length > 0) {
+                    this.files.map((item, index) => {
+                        console.log(item)
+                        console.log(index)
+                        this.files[index].response.data.namaFile = this.namaFiles[index]
+                    })
+                }                
+                this.form['petugas'] = this.selectedPetugasString
                 this.isLoading = true;
                 let data = {
                     DATA: this.form,
@@ -680,7 +693,10 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
                     LONGLAT: this.longlat,
                     JENIS: 'pbf'
                 };
-                this.$http.post(this.$api + '/input-monev', qs.stringify(data))
+                
+                let urlPost = (this.isUpdate == true) ? this.$api + '/update-monev?id=' + this.$route.query.id + '&jenis=monevpbf' : this.$api + '/input-monev';
+
+                this.$http.post(urlPost, qs.stringify(data))
                     .then((res) => {
                         this.isLoading = false;
                         if(res.data.status == true) {
@@ -697,9 +713,22 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
             },
 
             onChangeFile: function(e) {
-                // console.log('change file' + e)
-                this.$refs.upload.active = true
-                console.log(this.files)
+                if (this.$refs.upload.active) {
+                    return false
+                }
+                let countFiles = (this.namaFiles.length == 0) ? 0 : this.namaFiles.length
+                this.$buefy.dialog.prompt({
+                    message: `Masukan informasi file`,
+                    inputAttrs: {
+                        maxlength: 99
+                    },
+                    trapFocus: true,
+                    closeOnConfirm: true,
+                    onConfirm: (value) => {
+                        this.$refs.upload.active = true
+                        this.namaFiles[countFiles] = value
+                    }
+                })
             },
 
             onChangeFileLokasi: function(e) {
@@ -736,8 +765,6 @@ Tanyakan kepada PBF tersebut apakah pernah mendapat temuan dari BPOM, apabila ad
         },
 
         created() {
-            console.log(this.$route.query.edit) 
-            console.log(this.$route.query.id) 
             if(this.$route.query.edit == 'true') {
                 this.isUpdate = true
                 this.fetchData(this.$route.query.id)

@@ -33,6 +33,37 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
 
         <!-- PAGE DUA -->
         <section v-if="page2" style="padding-left: 1em; padding-right: 1em; padding-top: 1em;">
+            <p style="font-weight: bold;">Pilih Petugas {{isUpdate}}</p><br />
+            <button style="margin: 5px;" v-for="(item, index) in petugas" :key="item" @click="addPetugas(item)" class="button is-link is-outlined">{{item}}</button>           
+            <button style="margin: 5px;" @click="promptLainnya" class="button is-link is-outlined">Lainnya</button>           
+            <b-field label="Petugas yang dipilih">
+                <b-input v-model="selectedPetugasString"  value=""></b-input>
+            </b-field>              
+            <b-button type="is-danger" @click="resetPetugas" expanded>Reset Petugas</b-button>
+            <br />
+            <br />
+            <p style="font-weight: bold;">Upload Foto Lokasi</p>
+            <ul>
+                <li v-if="fotoLokasi.length > 0" v-for="(item, index) in fotoLokasi">
+                    <img @click="clickImageLokasi(index)" style="width: 100%;" :src="`${item.response.data.img}`" />
+                </li>
+            </ul>             
+            <file-upload
+                style="width: 100%;"
+                ref="uploadFotoLokasi"
+                :multiple="true"
+                v-model="fotoLokasi"
+                :post-action="`${this.$api}/upload`"
+                @input="onChangeFileLokasi"
+            >
+                <b-button type="is-success is-medium" expanded>Pilih File</b-button>
+                
+            </file-upload>
+            <br />            
+            <br />
+            <b-field label="Masukan Tanggal Periksa">
+                <b-input size="is-medium" type="date" v-model="form.tgl_periksa" placeholder="Masukan tanggal periksa"></b-input>
+            </b-field>           
             <p style="font-weight: bold;">Form A | Data Profil</p>
             <br />
             <b-field label="Nama Badan Hukum Perusahaan">
@@ -69,7 +100,7 @@ Cara Penghitungan Tingkat Kepatuhan CPAKB/CPPKRTB<br />
             <br />
             <div class="columns is-mobile">
                 <div class="column is-half">
-                    <b-button type="is-warning is-large" v-on:click="clearPage(); page1 = true" expanded>Kembali</b-button>
+                    <b-button type="is-warning is-large" v-on:click="saveDraft();" expanded>Save Draft</b-button>
                 </div>
                 <div class="column is-half">
                     <b-button type="is-primary is-large" v-on:click="clearPage(); page3 = true" expanded>Next</b-button>
@@ -2091,21 +2122,22 @@ Upload data dukung hasil inspeksi dalam 1(satu) file format PDF diantaranya:<br 
             <br />
             <p style="font-weight: bold;">Upload Data Dalam 1 File PDF</p>
             <ul>
-                <li v-if="files.length > 0" v-for="(item, index) in files">
+                <li style="border: 1px solid #CCC; margin-top: 1em;" v-if="files.length > 0" v-for="(item, index) in files">
                     <img @click="clickImage(index)" style="width: 100%;" src="http://202.150.151.50/e-mosi/public-assets/images/doc-icon.png" />
+                    <span style="margin: 1em; font-weight: bold; text-transform: uppercase;">{{namaFiles[index]}}</span>
                 </li>
             </ul>    
             <file-upload
+                style="width: 100%; margin-top: 1em; margin-bottom; 1em;"
                 ref="upload"
                 :multiple="true"
                 v-model="files"
-                post-action="http://202.150.151.50/api-e-mosi/public/upload"
+                :post-action="`${this.$api}/upload`"
                 @input="onChangeFile"
             >
-                <img style="width: 60px;" :src="`${this.$assets}/images/upload-icon.png`" />
-                
+                <b-button type="is-success is-light" expanded rounded>Pilih File / Dokumen</b-button>
+                <!-- <img style="width: 60px;" :src="`${this.$assets}/images/upload-icon.png`" /> -->
             </file-upload>
-
             <div class="columns is-mobile">
                 <div class="column is-half">
                     <b-button type="is-warning is-large" v-on:click="clearPage(); page8 = true" expanded>Kembali</b-button>
@@ -2131,6 +2163,9 @@ Upload data dukung hasil inspeksi dalam 1(satu) file format PDF diantaranya:<br 
                 name: 'John Silver',
                 form: [],
                 listKabkot: ['Kabupaten Bogor', 'Kota Depok', 'Kota Bekasi', 'Kota Cirebon', 'Kota Banjar', 'Kota Tasikmalaya', 'Kota Cimahi', 'Kota Bandung', 'Kota Sukabumi', 'Kota Bogor', 'Kabupaten Bandung Barat', 'Kabupaten Bekasi', 'Kabupaten Karawang', 'Kabupaten Purwakarta', 'Kabupaten Subang', 'Kabupaten Indramayu', 'Kabupaten Sumedang', 'Kabupaten Majalengka', 'Kabupaten Cirebon', 'Kabupaten Kuningan', 'Kabupaten Ciamis', 'Kabupaten Tasikmalaya', 'Kabupaten Garut', 'Kabupaten Cianjur', 'Kabupaten Sukabumi'],
+                petugas: ['Warningsih', 'Rd Hermalia', 'Yura Kalfataru', 'Heru Syafarudin', 'Mega Purnamasari', 'Susy Susilawaty', 'Arief Rachman', 'Susilawati', 'Seja', 'Ade Lili', 'Siti', 'Anti', 'Prima Eko', 'Mukhlis', 'Gita', 'Amir', 'APBD'],
+                selectedPetugas: [],
+                selectedPetugasString: '',
                 page1: true,
                 page2: false,
                 page3: false,
@@ -2142,7 +2177,10 @@ Upload data dukung hasil inspeksi dalam 1(satu) file format PDF diantaranya:<br 
                 page9: false,
                 page10: false,
                 page11: false,
-                files: []
+                files: [],
+                namaFiles: [],
+                fotoLokasi: [],
+                isUpdate: false                
             }
         },
         methods: {
@@ -2163,10 +2201,12 @@ Upload data dukung hasil inspeksi dalam 1(satu) file format PDF diantaranya:<br 
 
             clickImage: function(id) {
                 const index = this.files.indexOf(id);
+                const indexName = this.namaFiles.indexOf(id);
                 this.$buefy.dialog.confirm({
                     message: 'Apakah anda yakin ingin menghapus file ini?',
-                    onConfirm: () => {                    
+                    onConfirm: () => {
                         this.files.splice(index)
+                        this.namaFiles.splice(indexName)
                         this.$buefy.toast.open({
                             message: `File berhasil dihapus`,
                             position: 'is-bottom',
@@ -2174,27 +2214,93 @@ Upload data dukung hasil inspeksi dalam 1(satu) file format PDF diantaranya:<br 
                         })  
                     }
                 })      
-            },            
-
+            }, 
+            clickImageLokasi: function(id) {
+                const index = this.fotoLokasi.indexOf(id);
+                this.$buefy.dialog.confirm({
+                    message: 'Apakah anda yakin ingin menghapus foto ini?',
+                    onConfirm: () => {                    
+                        this.fotoLokasi.splice(index)
+                        this.$buefy.toast.open({
+                            message: `Foto berhasil dihapus`,
+                            position: 'is-bottom',
+                            type: 'is-success'
+                        })  
+                    }
+                })      
+            },
+            saveDraft: function() {
+                this.submitProses()
+            },
+            addPetugas: function(petugas) {
+                console.log(petugas)
+                this.selectedPetugas.push(petugas)
+                this.selectedPetugasString = this.selectedPetugas.toString();
+                console.log(this.selectedPetugas)
+            },
+            resetPetugas: function() {
+                this.selectedPetugas = []
+                this.selectedPetugasString = ''
+            },
+            fetchData: function(id) {
+                this.form = []
+                this.files = []
+                this.fotoLokasi = []
+                this.$http.get(this.$api + '/read-monev?id=' + id + '&jenis=monev_inspeksi_pak_pkrt')
+                    .then((res) => {
+                        console.log(res)
+                        this.selectedPetugasString = res.data.data.CONTENT.content.petugas.toString()
+                        this.form = res.data.data.CONTENT.content
+                        this.files = res.data.data.CONTENT.data_file,
+                        this.fotoLokasi = res.data.data.CONTENT.data_foto_lokasi                     
+                    })                   
+            },
+            promptLainnya() {
+                this.$buefy.dialog.prompt({
+                    message: `Masukan nama petugas`,
+                    inputAttrs: {
+                        placeholder: 'cth: Walter',
+                        maxlength: 99
+                    },
+                    trapFocus: true,
+                    onConfirm: (value) => {
+                        this.addPetugas(value)
+                    }
+                })
+            },                        
             submitProses: function() {
-                console.log(this.form)
+                
+                if(this.files.length > 0) {
+                    this.files.map((item, index) => {
+                        console.log(item)
+                        console.log(index)
+                        this.files[index].response.data.namaFile = this.namaFiles[index]
+                    })
+                }
+
+                this.form['petugas'] = this.selectedPetugasString
                 this.isLoading = true;
                 let data = {
                     DATA: this.form,
                     DATA_FILE: this.files,
+                    DATA_IMG_LOKASI: this.fotoLokasi,
                     USERNAME: this.username,
                     LONGLAT: this.longlat,
                     JENIS: 'inspeksipakpkrt'
                 };
-                this.$http.post(this.$api + '/input-monev', qs.stringify(data))
+                
+                let urlPost = (this.isUpdate == true) ? this.$api + '/update-monev?id=' + this.$route.query.id + '&jenis=monev_inspeksi_pak_pkrt' : this.$api + '/input-monev';
+                
+                this.$http.post(urlPost, qs.stringify(data))
                     .then((res) => {
                         this.isLoading = false;
                         if(res.data.status == true) {
                             this.$buefy.dialog.alert('Monev berhasil ditambahkan!')
                             this.clearPage();
-                            this.pageSatu = true
                             this.form = []
                             this.files = []
+                            this.fotoLokasi = []
+                            this.page1 = true
                         } else {
                             this.$buefy.dialog.alert('Ops! Terjadi Kesalahan.')
                         }
@@ -2202,9 +2308,27 @@ Upload data dukung hasil inspeksi dalam 1(satu) file format PDF diantaranya:<br 
             },
 
             onChangeFile: function(e) {
-                // console.log('change file' + e)
-                this.$refs.upload.active = true
-                console.log(this.files)
+                if (this.$refs.upload.active) {
+                    return false
+                }
+                let countFiles = (this.namaFiles.length == 0) ? 0 : this.namaFiles.length
+                this.$buefy.dialog.prompt({
+                    message: `Masukan informasi file`,
+                    inputAttrs: {
+                        maxlength: 99
+                    },
+                    trapFocus: true,
+                    closeOnConfirm: true,
+                    onConfirm: (value) => {
+                        this.$refs.upload.active = true
+                        this.namaFiles[countFiles] = value
+                    }
+                })
+            },
+
+            onChangeFileLokasi: function(e) {
+                this.$refs.uploadFotoLokasi.active = true
+                console.log(this.fotoLokasi)
             },
 
             inputFile: function (newFile, oldFile) {
@@ -2236,8 +2360,10 @@ Upload data dukung hasil inspeksi dalam 1(satu) file format PDF diantaranya:<br 
         },
 
         created() {
-            console.log(this.username)
-            console.log(this.longlat)
+            if(this.$route.query.edit == 'true') {
+                this.isUpdate = true
+                this.fetchData(this.$route.query.id)
+            }
         }
     }
 </script>

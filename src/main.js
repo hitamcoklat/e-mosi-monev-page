@@ -13,8 +13,10 @@ Vue.component('file-upload', VueUploadComponent)
 Vue.config.productionTip = false
 
 Vue.prototype.$api = 'http://localhost:8000';
+// Vue.prototype.$api = "http://maubikin.web.id/api-farmasi/public";
 // Vue.prototype.$api = "http://202.150.151.50/api-e-mosi/public";
-Vue.prototype.$assets = 'http://202.150.151.50/e-mosi/public-assets';
+// Vue.prototype.$assets = 'http://202.150.151.50/e-mosi/public-assets';
+Vue.prototype.$assets = 'http://maubikin.web.id/e-mosi/public-assets';
 Vue.prototype.$http = axios;
 
 new Vue({
